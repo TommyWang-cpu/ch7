@@ -15,6 +15,13 @@ public class StockTrader {
 		double[] prices = new double[n];
 		
 		loadData(in,years,months,prices);
+		printData(years,months,prices);
+		
+		int lowest = indexOfLowest(prices);
+		int highest = indexOfHighest(prices);
+		
+		System.out.println(years[lowest] + " " + months[lowest] + " " + prices[lowest]);
+		System.out.println(years[highest] + " " + months[highest] + " " + prices[highest]);
     }
     
     public static void loadData(Scanner in, int[] years, int[] months, double[] prices){
@@ -30,6 +37,58 @@ public class StockTrader {
 		String[] months = {"January","Feburary","March","April","May",
 						   "June","July","August","September","Octuber",
 						   "November","December"};
+						   
 		return months[month - 1];
 	}
+	
+	public static void printData(int[] years, int[] months, double[] prices){
+		
+		for(int i = 0; i < prices.length; i++){
+			System.out.println(years[i] + " " + months[i] + " " + prices[i]);
+		}
+		
+	}
+	
+	public static int indexOfLowest(double[] prices){
+		
+		int lowest = 0;
+		
+		
+		for(int i = 0; i < prices.length; i++){
+			if(prices[i] < prices[lowest]){
+				lowest = i;
+			}
+		}
+		
+		return lowest; 
+	}
+	
+	public static int indexOfHighest(double[] prices){
+		
+		int highest = 0;
+		
+		for(int i = 0; i < prices.length; i++){
+			if(prices[i] > prices[highest]){
+				highest = i;
+			}
+		}
+		
+		return highest;
+	}
+	
+	public static double indexOfBiggestDrop(double[] prices){
+		
+		int drop = 0;
+		double percentage = 0;
+		
+		for(int i = 0; i < prices.length; i++){
+			if(Math.abs(prices[i] - prices[i+1]) > Math.abs(prices[i+2] - prices[i+3])){
+				drop = i;
+			}
+			percentage = prices[drop-1] / prices[drop];
+		}
+		
+		return percentage;
+	}
+	
 }
