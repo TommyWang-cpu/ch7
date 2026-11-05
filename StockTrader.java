@@ -15,7 +15,7 @@ public class StockTrader {
 		double[] prices = new double[n];
 		
 		loadData(in,years,months,prices);
-		printData(years,months,prices);
+		printData(years,monthName(),prices);
 		
 		int lowest = indexOfLowest(prices);
 		int highest = indexOfHighest(prices);
@@ -28,17 +28,18 @@ public class StockTrader {
 		for(int i = 0; i < years.length; i++){
 			years[i] = in.nextInt();
 			months[i] = in.nextInt();
-			prices[i] = in.nextInt();	
+			prices[i] = in.nextDouble();	
 		}
 		
 	}
 	
-	public static String monthName(int month){
-		String[] months = {"January","Feburary","March","April","May",
+	public static String monthName(int months){
+		String[] month = {"January","Feburary","March","April","May",
 						   "June","July","August","September","Octuber",
 						   "November","December"};
-						   
-		return months[month - 1];
+		//if(months >= 1 && months <= 12){				   
+			return month[months - 1];
+		//}
 	}
 	
 	public static void printData(int[] years, int[] months, double[] prices){
@@ -82,7 +83,7 @@ public class StockTrader {
 		double percentage = 0;
 		
 		for(int i = 0; i < prices.length; i++){
-			if(Math.abs(prices[i] - prices[i+1]) > Math.abs(prices[i+2] - prices[i+3])){
+			if(Math.abs(prices[drop] - prices[drop+1]) < Math.abs(prices[i] - prices[i+1])){
 				drop = i;
 			}
 			percentage = prices[drop-1] / prices[drop];
@@ -90,5 +91,29 @@ public class StockTrader {
 		
 		return percentage;
 	}
+	
+	public static String buyAndHold(int month){
+		
+		String result;
+		
+		if(month == 0 ){
+			result = "BUY";
+		} else 
+			result = "HOLD";
+		
+		return result;
+	}
+	
+	//public static boolean dipBuyer(double[] prices){
+		
+		//int buy,sell; 
+		
+		//for(int i = 0; i < prices.length; i++){
+			//if(prices[i] > prices[i-1] ){
+			
+			//}
+	//}
+		
+	//}
 	
 }
