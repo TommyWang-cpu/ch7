@@ -15,13 +15,17 @@ public class StockTrader {
 		double[] prices = new double[n];
 		
 		loadData(in,years,months,prices);
-		printData(years,monthName(),prices);
+		printData(years,months,prices);
 		
 		int lowest = indexOfLowest(prices);
 		int highest = indexOfHighest(prices);
 		
 		System.out.println(years[lowest] + " " + months[lowest] + " " + prices[lowest]);
 		System.out.println(years[highest] + " " + months[highest] + " " + prices[highest]);
+		
+		indexOfHighest(prices);
+		buyAndHold(months,10000,prices);
+		dipBuyer(months,10000,prices);
     }
     
     public static void loadData(Scanner in, int[] years, int[] months, double[] prices){
@@ -92,28 +96,51 @@ public class StockTrader {
 		return percentage;
 	}
 	
-	public static String buyAndHold(int month){
+	public static void buyAndHold(int[] months,double money,double[] prices){
 		
 		String result;
+		int share;
+		double moneyFinal;
+		double moneyLeft = 0;
 		
-		if(month == 0 ){
+		if(months[0] == 1){
 			result = "BUY";
-		} else 
+			share = (int)((money-10)/prices[0]);
+			moneyLeft = (int)((money-10)%prices[0]);
+		} else {
 			result = "HOLD";
-		
-		return result;
+			share = 0;
+			moneyFinal = money;
+		}
+			
+		moneyFinal = prices[prices.length - 1] * share + moneyLeft;
+
+		System.out.println(result + " " + share + " shares at " + prices[0]);
+		System.out.println("Final value: " + moneyFinal);
 	}
 	
-	//public static boolean dipBuyer(double[] prices){
+	public static void dipBuyer(int[] months,double money,double[] prices){
 		
-		//int buy,sell; 
+		String result = "Unknown";
+		int share = 0;
+		double moneyFinal = money;
+		double moneyLeft = 0;
 		
-		//for(int i = 0; i < prices.length; i++){
-			//if(prices[i] > prices[i-1] ){
-			
-			//}
-	//}
-		
-	//}
+		for(int i = 0; i < months.length; i++){
+			if( months[i] >= 2){
+				if(prices[i] > prices[i-1] && prices[i] > prices[i-2]){
+					result = "BUY";
+					share = (int)((money-10)/prices[0]);
+					moneyLeft = (int)((money-10)%prices[0]);
+					
+					if(prices[i] > prices[i-1] * 1.1){
+						moneyFinal = prices[prices.length - 1] * share + moneyLeft;
+					}
+				}
+			}
+		}
+		System.out.println(result + " " + share + " shares at " + prices[0]);
+		System.out.println("Final value: " + moneyFinal);
+	}
 	
 }
