@@ -27,7 +27,7 @@ public class StockTrader {
 
         System.out.println();
         System.out.println(symbol + " lowest: $" + 
-                           String.format("%.2f", prices[lowest]) +
+						   String.format("%.2f", prices[lowest]) +
                            " in " + monthName(months[lowest]) +
                            " " + years[lowest]);
 
@@ -38,12 +38,10 @@ public class StockTrader {
 
         double result = simulate(years, months, prices);
 
-        System.out.println("Final value: $" +
-                           String.format("%,.2f", result));
+        System.out.println("Final value: $" + String.format("%,.2f", result));
     }
 
-    public static void loadData(Scanner in, int[] years,
-                                int[] months, double[] prices) {
+    public static void loadData(Scanner in, int[] years,int[] months, double[] prices) {
 
         for (int i = 0; i < years.length; i++) {
             years[i] = in.nextInt();
@@ -60,8 +58,7 @@ public class StockTrader {
         return months[month - 1];
     }
 
-    public static void printData(int[] years, int[] months,
-                                 double[] prices) {
+    public static void printData(int[] years, int[] months,double[] prices) {
 
         for (int i = 0; i < prices.length; i++) {
 
@@ -192,9 +189,7 @@ public class StockTrader {
      * The idea is to buy after a significant downward trend and
      * sell when I make a good profit or limit a large loss.
      */
-    public static String myStrategy(double[] history,
-                                    boolean holding,
-                                    double boughtAt) {
+    public static String myStrategy(double[] history,boolean holding,double boughtAt) {
 
         int n = history.length;
         double today = history[n - 1];
@@ -212,8 +207,7 @@ public class StockTrader {
 
         if (holding) {
 
-            if (today >= boughtAt * 1.15 ||
-                today <= boughtAt * 0.90) {
+            if (today >= boughtAt * 1.15 ||today <= boughtAt * 0.90) {
 
                 return "SELL";
             }
@@ -222,16 +216,12 @@ public class StockTrader {
         return "HOLD";
     }
 
-    public static String decide(double[] history,
-                                boolean holding,
-                                double boughtAt) {
+    public static String decide(double[] history,boolean holding,double boughtAt) {
 
         return buyAndHold(history, holding, boughtAt);
     }
 
-    public static double simulate(int[] years,
-                                  int[] months,
-                                  double[] prices) {
+    public static double simulate(int[] years,int[] months,double[] prices) {
 
         double cash = START_CASH;
         int shares = 0;
@@ -269,8 +259,7 @@ public class StockTrader {
                     monthName(months[i]) + " " +
                     years[i] + ": SELL " +
                     shares + " shares at $" +
-                    String.format("%.2f", prices[i])
-                );
+                    String.format("%.2f", prices[i]));
 
                 shares = 0;
                 boughtAt = 0.0;
